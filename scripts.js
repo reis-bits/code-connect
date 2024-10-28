@@ -8,7 +8,7 @@ uploadBtn.addEventListener("click", () => {
 });
 
 // Declaração da função que vai ler o conteúdo de um arquivo
-function lerConteudoDoArquivo() {
+function lerConteudoDoArquivo(arquivo) {
 
     // Retorna uma nova Promise que encapsula o processo de leitura do arquivo, resolve caso a operação seja bem sucedida, reject caso fracasse.
     return new Promise((resolve, reject) => {
@@ -33,3 +33,21 @@ function lerConteudoDoArquivo() {
         leitor.readAsDataURL(arquivo);
     });
 }
+
+const imagemPrincipal = document.querySelector('.main-imagem');
+const nomeDaImagem = document.querySelector('.container-image-nome p');
+
+inputUpload.addEventListener("change", async (evento) => {
+    const arquivo = evento.target.files[0];
+
+    if (arquivo) {
+        try {
+            const conteudoDoArquivo = await lerConteudoDoArquivo(arquivo);
+            imagemPrincipal.src = conteudoDoArquivo.url
+            nomeDaImagem.textContent = conteudoDoArquivo.nome
+        } catch (erro) {
+            console.error('Erro na leitura do arquivo');
+        }
+    };
+})
+
