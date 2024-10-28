@@ -34,20 +34,34 @@ function lerConteudoDoArquivo(arquivo) {
     });
 }
 
+// Seleciona o elemento de imagem principal onde a imagem carregada será exibida
 const imagemPrincipal = document.querySelector('.main-imagem');
+
+// Seleciona o elemento <p> que exibirá o nome da imagem carregada
 const nomeDaImagem = document.querySelector('.container-image-nome p');
 
+// Adiciona um evento para detectar quando o usuário seleciona um arquivo através do input
 inputUpload.addEventListener("change", async (evento) => {
+    
+    // Obtém o primeiro arquivo selecionado pelo usuário
     const arquivo = evento.target.files[0];
 
+    // Verifica se o arquivo existe (se foi selecionado pelo usuário)
     if (arquivo) {
         try {
+            // Aguarda a leitura do conteúdo do arquivo de forma assíncrona usando a função lerConteudoDoArquivo
             const conteudoDoArquivo = await lerConteudoDoArquivo(arquivo);
-            imagemPrincipal.src = conteudoDoArquivo.url
-            nomeDaImagem.textContent = conteudoDoArquivo.nome
+            
+            // Define a URL do conteúdo do arquivo como a fonte da imagem principal
+            imagemPrincipal.src = conteudoDoArquivo.url;
+            
+            // Define o nome do arquivo como o conteúdo de texto do elemento <p> selecionado
+            nomeDaImagem.textContent = conteudoDoArquivo.nome;
         } catch (erro) {
+            // Exibe uma mensagem de erro caso ocorra algum problema na leitura do arquivo
             console.error('Erro na leitura do arquivo');
         }
     };
-})
+});
+
 
